@@ -27,7 +27,7 @@ public class ProductEntity  implements Serializable{
 	
 	@ManyToOne
 	@JoinColumn(name = "category_id")
-	private CategoryEntity category_id;
+	private CategoryEntity category;
 	
 	public ProductEntity() {
 		
@@ -74,11 +74,11 @@ public class ProductEntity  implements Serializable{
 	}
 
 	public CategoryEntity getCategory_id() {
-		return category_id;
+		return category;
 	}
 
-	public void setCategory_id(CategoryEntity category_id) {
-		this.category_id = category_id;
+	public void setCategory_id(CategoryEntity category) {
+		this.category = category;
 	}
 
 	

@@ -1,7 +1,5 @@
 package com.teste.estoque.dtos;
 
-import com.teste.estoque.entities.CategoryEntity;
-
 public class ProductDto {
 
 	private Long id;
