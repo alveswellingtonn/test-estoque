@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -63,16 +62,9 @@ public class CategoryController {
     }
     
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateCategory(@PathVariable(value = "id") Long id,
+    public ResponseEntity<CategoryDto> updateCategory(@PathVariable(value = "id") Long id,
                                                     @RequestBody @Valid CategoryDto categoryDto){
-        Optional<CategoryEntity> categoryEntityOptional = categoryService.findById(id);
-        if (!categoryEntityOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Category not found.");
-        }
-        var categoryEntity = new CategoryEntity();
-        BeanUtils.copyProperties(categoryDto, categoryEntity);
-        categoryEntity.setId(categoryEntityOptional.get().getId());
-        //categoryEntity.setRegistrationDate(parkingSpotModelOptional.get().getRegistrationDate());
-        return ResponseEntity.status(HttpStatus.OK).body("");
+        categoryDto = categoryService.updateCategory(id, categoryDto);
+        return ResponseEntity.status(HttpStatus.OK).body(categoryDto);
     }
 }
