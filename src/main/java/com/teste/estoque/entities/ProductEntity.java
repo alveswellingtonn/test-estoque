@@ -1,6 +1,8 @@
 package com.teste.estoque.entities;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,7 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -25,12 +28,22 @@ public class ProductEntity  implements Serializable{
 	private Double price;
 	private int quantity;
 	
-	@ManyToOne
-	@JoinColumn(name = "category_id")
-	private CategoryEntity category;
+	@ManyToMany
+	@JoinTable( name = "tb_product_category",
+				joinColumns = @JoinColumn(name = "product_id"),
+				inverseJoinColumns = @JoinColumn(name = "category_id"))
+	Set<CategoryEntity> categories = new HashSet<>();
 	
 	public ProductEntity() {
 		
+	}
+
+	public ProductEntity(Long id, String name, String description, Double price, int quantity) {
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.price = price;
+		this.quantity = quantity;
 	}
 
 	public Long getId() {
@@ -73,14 +86,8 @@ public class ProductEntity  implements Serializable{
 		this.quantity = quantity;
 	}
 
-	public CategoryEntity getCategory_id() {
-		return category;
+	public Set<CategoryEntity> getCategories() {
+		return categories;
 	}
-
-	public void setCategory_id(CategoryEntity category) {
-		this.category = category;
-	}
-
-	
 
 }

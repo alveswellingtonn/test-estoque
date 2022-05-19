@@ -5,6 +5,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -28,22 +29,13 @@ import com.teste.estoque.services.CategoryService;
 @RequestMapping("/categories")
 public class CategoryController {
 	
-	/*@Autowired
-	private CategoryService categoryService;*/
+	@Autowired
+	private CategoryService categoryService;
 	
-	final CategoryService categoryService;
-
-    public CategoryController(CategoryService categoryService) {
-        this.categoryService = categoryService;
-    }
-
     @PostMapping
-    public ResponseEntity<Object> saveCategory(@RequestBody CategoryDto categoryDto){
-        
-        var categoryEntity = new CategoryEntity();
-        BeanUtils.copyProperties(categoryDto, categoryEntity);
-        //categoryEntity.setRegistrationDate(LocalDateTime.now(ZoneId.of("UTC")));
-        return ResponseEntity.status(HttpStatus.CREATED).body(categoryService.save(categoryEntity));
+    public ResponseEntity<CategoryDto> saveCategory(@RequestBody CategoryDto categoryDto){
+    	categoryDto = categoryService.save(categoryDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(categoryDto);
     }
     
     @GetMapping
@@ -81,6 +73,6 @@ public class CategoryController {
         BeanUtils.copyProperties(categoryDto, categoryEntity);
         categoryEntity.setId(categoryEntityOptional.get().getId());
         //categoryEntity.setRegistrationDate(parkingSpotModelOptional.get().getRegistrationDate());
-        return ResponseEntity.status(HttpStatus.OK).body(categoryService.save(categoryEntity));
+        return ResponseEntity.status(HttpStatus.OK).body("");
     }
 }

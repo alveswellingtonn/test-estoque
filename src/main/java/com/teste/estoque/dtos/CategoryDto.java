@@ -1,12 +1,28 @@
 package com.teste.estoque.dtos;
 
-public class CategoryDto {
+import java.io.Serializable;
+
+import com.teste.estoque.entities.CategoryEntity;
+
+public class CategoryDto implements Serializable{
+	private static final long serialVersionUID = 1L;
 	
 	private Long id;
 	private String name;
 	
-	CategoryDto(){
+	public CategoryDto(){
 		
+	}
+
+	public CategoryDto(Long id, String name) {
+		super();
+		this.id = id;
+		this.name = name;
+	}
+
+	public CategoryDto(CategoryEntity entity) {
+		this.id = entity.getId();
+		this.name = entity.getName();
 	}
 
 	public Long getId() {

@@ -4,28 +4,27 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.teste.estoque.dtos.CategoryDto;
 import com.teste.estoque.entities.CategoryEntity;
 import com.teste.estoque.repositories.CategoryRepository;
 
 @Service
 public class CategoryService {
 
-	/*@Autowired
-	CategoryRepository categoryRepository;*/
-	
-	final CategoryRepository categoryRepository;
-
-    public CategoryService(CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
-    }
+	@Autowired
+	private CategoryRepository categoryRepository;
 
     @Transactional
-	public CategoryEntity save(CategoryEntity categoryEntity) {
-		return categoryRepository.save(categoryEntity);
+	public CategoryDto save(CategoryDto categoryDto) {
+    	CategoryEntity entity = new CategoryEntity();
+    	entity.setName(categoryDto.getName());
+    	entity = categoryRepository.save(entity);
+		return new CategoryDto(entity);
 	}
 
 	public Page<CategoryEntity> findAll(Pageable pageable) {

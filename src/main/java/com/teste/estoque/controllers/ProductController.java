@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
-import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -28,22 +28,13 @@ import com.teste.estoque.services.ProductService;
 @RequestMapping("/products")
 public class ProductController {
 	
-	/*@Autowired
-	private ProductService productService;*/
+	@Autowired
+	private ProductService productService;
 	
-	final ProductService productService;
-
-    public ProductController(ProductService productService) {
-        this.productService = productService;
-    }
-    
     @PostMapping
-    public ResponseEntity<Object> saveProducty(@RequestBody ProductDto productDto) {
-        
-        var productEntity = new ProductEntity();
-        BeanUtils.copyProperties(productDto, productEntity);
-        //categoryEntity.setRegistrationDate(LocalDateTime.now(ZoneId.of("UTC")));
-        return ResponseEntity.status(HttpStatus.CREATED).body(productService.save(productEntity));
+    public ResponseEntity<ProductDto> saveProducty(@RequestBody ProductDto productDto) {
+    	productDto = productService.save(productDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(productDto);
     }
 
     @GetMapping
@@ -71,16 +62,9 @@ public class ProductController {
     }
     
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateProduct(@PathVariable(value = "id") Long id,
+    public ResponseEntity<ProductDto> updateProduct(@PathVariable(value = "id") Long id,
                                                     @RequestBody @Valid ProductDto productDto){
-        Optional<ProductEntity> productEntityOptional = productService.findById(id);
-        if (!productEntityOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product not found.");
-        }
-        var productEntity = new ProductEntity();
-        BeanUtils.copyProperties(productDto, productEntity);
-        productEntity.setId(productEntityOptional.get().getId());
-        //categoryEntity.setRegistrationDate(parkingSpotModelOptional.get().getRegistrationDate());
-        return ResponseEntity.status(HttpStatus.OK).body(productService.save(productEntity));
+        productDto = productService.updateProduct(id, productDto);
+    	return ResponseEntity.status(HttpStatus.OK).body(productDto);
     }
 }
