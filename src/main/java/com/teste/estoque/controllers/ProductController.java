@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.teste.estoque.dtos.ProductDto;
 import com.teste.estoque.entities.ProductEntity;
+import com.teste.estoque.repositories.ProductRepository;
 import com.teste.estoque.services.ProductService;
 
 @RestController
@@ -30,6 +31,9 @@ public class ProductController {
 	
 	@Autowired
 	private ProductService productService;
+	
+	@Autowired 
+	ProductRepository productRepository;
 	
     @PostMapping
     public ResponseEntity<ProductDto> saveProducty(@RequestBody ProductDto productDto) {
@@ -67,4 +71,5 @@ public class ProductController {
         productDto = productService.updateProduct(id, productDto);
     	return ResponseEntity.status(HttpStatus.OK).body(productDto);
     }
+    
 }

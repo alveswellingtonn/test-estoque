@@ -7,5 +7,5 @@ import com.teste.estoque.entities.CategoryEntity;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<CategoryEntity, Long>{
-
+	
 }

@@ -8,9 +8,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "tb_category")
@@ -22,8 +23,8 @@ public class CategoryEntity implements Serializable{
 	private Long id;
 	private String name;
 	
-	@OneToMany
-	@JoinColumn(name = "products_list")
+	@JsonManagedReference
+	@ManyToMany(mappedBy="categories")
 	public List<ProductEntity> products = new ArrayList<>();
 	
 	public CategoryEntity() {
@@ -53,6 +54,10 @@ public class CategoryEntity implements Serializable{
 
 	public List<ProductEntity> getProducts() {
 		return products;
+	}
+
+	public void setProducts(List<ProductEntity> products) {
+		this.products = products;
 	}
 
 }

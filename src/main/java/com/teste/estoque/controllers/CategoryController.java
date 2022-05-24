@@ -67,4 +67,12 @@ public class CategoryController {
         categoryDto = categoryService.updateCategory(id, categoryDto);
         return ResponseEntity.status(HttpStatus.OK).body(categoryDto);
     }
+    
+    /*@GetMapping("/{id}/products")
+    public ResponseEntity<List<CategoryDto>> findByIdProductCategory(@PathVariable("category_id") Long category_id, CategoryDto categoryDto) {
+    	
+    	List<CategoryDto> products = categoryService.findProductsCategories(category_id, categoryDto);
+    	
+    	return ResponseEntity.status(HttpStatus.OK).body(products);
+    }*/
 }

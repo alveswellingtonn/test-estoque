@@ -39,7 +39,7 @@ public class CategoryService {
 	public Page<CategoryEntity> findAll(Pageable pageable) {
 		return categoryRepository.findAll(pageable);
 	}
-
+	
 	public Optional<CategoryEntity> findById(Long id) {
 		return categoryRepository.findById(id);
 	}
@@ -68,4 +68,5 @@ public class CategoryService {
 		}
 
 	}
+
 }
