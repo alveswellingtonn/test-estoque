@@ -28,12 +28,12 @@ public class CategoryService {
     @Transactional
 	public CategoryDto save(CategoryDto categoryDto) {
     	CategoryEntity entity = new CategoryEntity();
-    	copyDtoToEntity(categoryDto, entity);
-    	entity = categoryRepository.save(entity);
-    	//entity.setName(categoryDto.getName());
+    	//copyDtoToEntity(categoryDto, entity);
     	//entity = categoryRepository.save(entity);
-		//return new CategoryDto(entity);
-    	return new CategoryDto(entity, entity.getProducts());
+    	entity.setName(categoryDto.getName());
+    	entity = categoryRepository.save(entity);
+		return new CategoryDto(entity);
+    	//return new CategoryDto(entity, entity.getProducts());
 	}
 
 	public Page<CategoryEntity> findAll(Pageable pageable) {
